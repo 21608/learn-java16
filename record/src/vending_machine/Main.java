@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	static String priceErrMessage = "金額は小数点を含まない1以上の値を入力してください。";
+	static String selectNoErroMessage = "商品番号は数値0〜4を入力してください。";
 
 	public static void main(String[] args) {
 		int i = 0;
@@ -26,7 +27,7 @@ public class Main {
 		System.out.printf("投入額：%d%n%n", input);
 
 		System.out.printf("購入する商品番号を入力してください：");
-		int merchandiseNo = scanner.nextInt();
+		int merchandiseNo = inputNo(merchandiseList.size());
 		System.out.printf("%sを購入しました。お釣りは%d円です。",
 				merchandiseList.get(merchandiseNo).name(),
 				input - merchandiseList.get(merchandiseNo).price());
@@ -46,6 +47,24 @@ public class Main {
 			exitSystem();
 		}
 
+		return input;
+	}
+	
+	public static int inputNo(int listSize) {
+		int input = 0;
+		
+		try {
+			input = scanner.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println(selectNoErroMessage);
+			exitSystem();
+		}
+
+		if(input < 0 || input >= listSize) {
+			System.out.println(selectNoErroMessage);
+			exitSystem();
+		}
+		
 		return input;
 	}
 
